@@ -5,3 +5,10 @@
 #world-wide{
     border-radius: 20px;
 }
+
+/* responsive */
+@media (max-width: 490px) {
+    .navbar .container{
+        padding: 0px;
+    }
+}
