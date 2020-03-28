@@ -18,7 +18,7 @@ fetch(endPoint, {
 .then(data => {
     countries = data.countries_stat;
     worldWide();
-})
+});
 
 // world wide 
 function worldWide() {
@@ -110,4 +110,7 @@ function displayMatch(e){
 // get search input
 search.addEventListener('change', displayMatch);
 search.addEventListener('keyup', displayMatch);
+
+
+
 

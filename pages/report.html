@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../image/covid.png" type="image/x-png">
+    <title>COVID-19 | Report</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- nav -->
+    <nav class="navbar navbar-expand-md navbar-light bg-info text-white">
+        <div class="container py-2">
+            <a href="../index.html" class="text-white text-decoration-none ">
+                <h1> 
+                    C<img src="../image/covid.png" alt="">VID-19
+                </h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item active">
+                    <a class="nav-link text-white font-weight-bold" href="myanmar.html">Myanmar<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white font-weight-bold" href="report.html">Report</a>
+                  </li>
+                </ul>
+              </div>
+        </div>
+    </nav>
+
+    <!-- countries -->
+    <div class="container ">
+        <div class="quotes">
+            Stay at Home, Save lives
+        </div>
+        <h2 class="my-4">Report Coronavirus Cases</h2>
+        <div id="countries">
+            <table class="table table-responsive mb-5">
+                    <thead class="table-info">
+                      <tr>
+                        <th scope="col">Country</th>
+                        <th scope="col">Total Cases</th>
+                        <th scope="col">New Cases</th>
+                        <th scope="col">Total Death</th>
+                        <th scope="col">New Death</th>
+                        <th scope="col">Total Recovered</th>
+                        <th scope="col">Serious</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+   
+    <!-- script -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        const report = document.querySelector('tbody');
+        let countries;
+        let output = '';
+        // fetch data
+        fetch("https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "coronavirus-monitor.p.rapidapi.com",
+                "x-rapidapi-key": "ddf542925cmshdcef509621c9c15p17b8dbjsn16b58a203c91"
+            }
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            countries = data.countries_stat;
+            console.log(countries);
+            countries.forEach(country => {
+            output += `
+                <tr>
+                    <th scope="row">${country.country_name}</th>
+                    <td>${country.cases}</td>
+                    <td class="bg-info text-white">${country.new_cases}</td>
+                    <td>${country.deaths}</td>
+                    <td class="bg-danger text-white">${country.new_deaths}</td>
+                    <td>${country.total_recovered}</td>
+                    <td>${country.serious_critical}</td>
+                </tr>`;
+            });
+            report.innerHTML = output;
+        });
+    </script>
+</body>
+</html>
